@@ -1,135 +1,169 @@
-import BlackJack.Objects.Card;
-import BlackJack.Objects.Deck;
-import BlackJack.Objects.Hand;
+import Objects.Card;
+import Objects.Deck;
+import Objects.Hand;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-import static BlackJack.Objects.Enums.CardSuit.Hearts;
-import static BlackJack.Objects.Enums.CardValue.*;
-import static org.junit.Assert.assertTrue;
+import static Objects.Enums.CardSuit.Hearts;
+import static Objects.Enums.CardValue.*;
+import static org.junit.Assert.assertEquals;
 
 public class CalculateScoreTest {
     Deck deck = new Deck();
     Hand testPlayerHand = new Hand(deck);
+    Field cards = Hand.class.getDeclaredField("cards");
+    Method calculateScore = Hand.class.getDeclaredMethod("calculateScore");
 
-    @Test
-    public void AceShouldScore11() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace));
-        assertTrue(testPlayerHand.calculateScore() == 11);
+
+    public CalculateScoreTest() throws NoSuchFieldException, NoSuchMethodException {
+    }
+
+//    @Test
+//    void testPrivateFieldManipulation() throws NoSuchFieldException, IllegalAccessException {
+//        MyClass obj = new MyClass();
+//        Field field = MyClass.class.getDeclaredField("privateField");
+//        field.setAccessible(true); // Allow access to private field
+//        field.set(obj, "newValue"); // Set the value of the private field
+//        assertEquals("newValue", field.get(obj)); // Get and assert the value
+//    }
+
+//    @Test
+//    void testPrivateMethodInvocation() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+//        MyClass obj = new MyClass();
+//        Method method = MyClass.class.getDeclaredMethod("privateMethod", String.class);
+//        method.setAccessible(true); // Allow access to private method
+//        String result = (String) method.invoke(obj, "testInput"); // Invoke the private method
+//        assertEquals("Processed: testInput", result);
+//    }
+
+    @Before
+    public void Before(){
+        cards.setAccessible(true);
+        calculateScore.setAccessible(true);
     }
 
     @Test
-    public void KingShouldScore10() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, King));
-        assertTrue(testPlayerHand.calculateScore() == 10);
+    public void AceShouldScore11() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace)));
+        assertEquals(11, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void QueenShouldScore10() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Queen));
-        assertTrue(testPlayerHand.calculateScore() == 10);
+    public void KingShouldScore10() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, King)));
+        assertEquals(10, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void JackShouldScore10() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Jack));
-        assertTrue(testPlayerHand.calculateScore() == 10);
+    public void QueenShouldScore10() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Queen)));
+        assertEquals(10, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void NineShouldScore9() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Nine));
-        assertTrue(testPlayerHand.calculateScore() == 9);
+    public void JackShouldScore10() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Jack)));
+        assertEquals(10, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void EightShouldScore8() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Eight));
-        assertTrue(testPlayerHand.calculateScore() == 8);
+    public void NineShouldScore9() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Nine)));
+        assertEquals(9, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void SevenShouldScore7() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Seven));
-        assertTrue(testPlayerHand.calculateScore() == 7);
+    public void EightShouldScore8() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Eight)));
+        assertEquals(8, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void SixShouldScore6() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Six));
-        assertTrue(testPlayerHand.calculateScore() == 6);
+    public void SevenShouldScore7() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Seven)));
+        assertEquals(7, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void FiveShouldScore5() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Five));
-        assertTrue(testPlayerHand.calculateScore() == 5);
+    public void SixShouldScore6() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Six)));
+        assertEquals(6, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void FourShouldScore4() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Four));
-        assertTrue(testPlayerHand.calculateScore() == 4);
+    public void FiveShouldScore5() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Five)));
+        assertEquals(5, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void ThreeShouldScore3() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Three));
-        assertTrue(testPlayerHand.calculateScore() == 3);
+    public void FourShouldScore4() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Four)));
+        assertEquals(4, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void TwoShouldScore2() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Two));
-        assertTrue(testPlayerHand.calculateScore() == 2);
+    public void ThreeShouldScore3() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Three)));
+        assertEquals(3, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceKingShouldScore21() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, King));
-        assertTrue(testPlayerHand.calculateScore() == 21);
+    public void TwoShouldScore2() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Two)));
+        assertEquals(2, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceNineShouldScore20() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Nine));
-        assertTrue(testPlayerHand.calculateScore() == 20);
+    public void AceKingShouldScore21() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, King)));
+        assertEquals(21, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceAceShouldScore12() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Ace));
-        assertTrue(testPlayerHand.calculateScore() == 12);
+    public void AceNineShouldScore20() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Nine)));
+        assertEquals(20, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceAceAceShouldScore13() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ace));
-        assertTrue(testPlayerHand.calculateScore() == 13);
+    public void AceAceShouldScore12() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Ace)));
+        assertEquals(12, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceAceAceAceShouldScore14() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ace));
-        assertTrue(testPlayerHand.calculateScore() == 14);
+    public void AceAceAceShouldScore13() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ace)));
+        assertEquals(13, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceAceTenShouldScore12() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ten));
-        assertTrue(testPlayerHand.calculateScore() == 12);
+    public void AceAceAceAceShouldScore14() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ace)));
+        assertEquals(14, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceAceNineShouldScore21() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Nine));
-        assertTrue(testPlayerHand.calculateScore() == 21);
+    public void AceAceTenShouldScore12() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Ten)));
+        assertEquals(12, calculateScore.invoke(testPlayerHand));
     }
 
     @Test
-    public void AceFiveSixShouldScore12() {
-        testPlayerHand.currentHand = List.of(new Card(Hearts, Ace), new Card(Hearts, Five), new Card(Hearts, Six));
-        assertTrue(testPlayerHand.calculateScore() == 12);
+    public void AceAceNineShouldScore21() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Ace), new Card(Hearts, Nine)));
+        assertEquals(21, calculateScore.invoke(testPlayerHand));
+    }
+
+    @Test
+    public void AceFiveSixShouldScore12() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Five), new Card(Hearts, Six)));
+        assertEquals(12, calculateScore.invoke(testPlayerHand));
     }
 }

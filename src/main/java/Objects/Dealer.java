@@ -28,6 +28,7 @@ public class Dealer extends Utils {
     public int getScore() {
         return dealerHand.getScore();
     }
+    public Hand getHand() {return dealerHand;}
 
     private void showScore() {
         dealerHand.showScore();

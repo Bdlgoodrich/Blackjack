@@ -21,17 +21,10 @@ public class Deck {
             }
         }
     }
-    /*
-    public Card pullRandomCard()
-    {
-        Random random = new Random();
-        int cardIndex = random.nextInt(deck.size());
-        return deck.remove(cardIndex);
-    } */
 
-    public void randomizeDeck()
+    public void shuffleDeck()
     {
-        int cardCount = CardSuit.values().length*CardValue.values().length;
+        int cardCount = deck.size();
         Random random = new Random();
         for (int i = 0; i<cardCount;i++){
             int swapWith = random.nextInt(cardCount);
@@ -47,13 +40,13 @@ public class Deck {
 
     public Card pullNextCard()
     {
-        return deck.remove(deck.size()-1);
+        return deck.removeLast();
     }
 
     public void shuffleIfNeeded(){
         if (deck.size()<35){
             setDeck();
-            randomizeDeck();
+            shuffleDeck();
             System.out.println("A new, shuffled deck is being used.");
         }
     }

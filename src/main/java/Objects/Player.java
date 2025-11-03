@@ -31,6 +31,9 @@ public class Player extends Utils {
     public int getScore() {
         return hand.getScore();
     }
+    public Hand getHand(){
+        return hand;
+    }
 
     public void makeBet() {
         if (bet.getCurrentBet() == 0) bet.makeBet();

@@ -91,4 +91,5 @@ public class Dealer extends Utils {
         bet.insuranceWin();
         bet.lose();
     }
+
 }

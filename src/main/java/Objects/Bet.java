@@ -136,8 +136,6 @@ public class Bet extends Utils {
             showText("You won $" + insurance * 2 + " from your insurance.", TextColors.GREEN);
             pressAnyKey();
         }
-            lose();
-            pressAnyKey();
     }
     protected void insuranceLose() {
         if (insurance > 0) {

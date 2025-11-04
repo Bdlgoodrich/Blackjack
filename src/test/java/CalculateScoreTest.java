@@ -23,26 +23,8 @@ public class CalculateScoreTest {
     public CalculateScoreTest() throws NoSuchFieldException, NoSuchMethodException {
     }
 
-//    @Test
-//    void testPrivateFieldManipulation() throws NoSuchFieldException, IllegalAccessException {
-//        MyClass obj = new MyClass();
-//        Field field = MyClass.class.getDeclaredField("privateField");
-//        field.setAccessible(true); // Allow access to private field
-//        field.set(obj, "newValue"); // Set the value of the private field
-//        assertEquals("newValue", field.get(obj)); // Get and assert the value
-//    }
-
-//    @Test
-//    void testPrivateMethodInvocation() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-//        MyClass obj = new MyClass();
-//        Method method = MyClass.class.getDeclaredMethod("privateMethod", String.class);
-//        method.setAccessible(true); // Allow access to private method
-//        String result = (String) method.invoke(obj, "testInput"); // Invoke the private method
-//        assertEquals("Processed: testInput", result);
-//    }
-
     @Before
-    public void Before(){
+    public void Setup(){
         cards.setAccessible(true);
         calculateScore.setAccessible(true);
     }
@@ -166,4 +148,12 @@ public class CalculateScoreTest {
         cards.set(testPlayerHand, List.of(new Card(Hearts, Ace), new Card(Hearts, Five), new Card(Hearts, Six)));
         assertEquals(12, calculateScore.invoke(testPlayerHand));
     }
+
+    @Test
+    public void KingQueenTwoShouldScore0() throws IllegalAccessException, InvocationTargetException {
+        cards.set(testPlayerHand, List.of(new Card(Hearts, King), new Card(Hearts, Queen), new Card(Hearts, Two)));
+        assertEquals(0, calculateScore.invoke(testPlayerHand));
+    }
+
+
 }

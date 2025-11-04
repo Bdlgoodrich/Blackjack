@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CalculateScoreTest {
     Deck deck = new Deck();
-    Hand testPlayerHand = new Hand(deck);
+    Hand testPlayerHand = new Hand();
     Field cards = Hand.class.getDeclaredField("cards");
     Method calculateScore = Hand.class.getDeclaredMethod("calculateScore");
 

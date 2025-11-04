@@ -6,8 +6,8 @@ import java.lang.reflect.Field;
 
 public class ResolveGameTest {
     Deck deck = new Deck();
-    Player testPlayer = new Player(deck);
-    Dealer testDealer = new Dealer(deck);
+    Player testPlayer = new Player();
+    Dealer testDealer = new Dealer();
     Hand testPlayerHand = testPlayer.getHand();
     Hand testDealerHand = testDealer.getHand();
     Bet testBet = new Bet();
@@ -25,7 +25,7 @@ public class ResolveGameTest {
     public void P20D19ShouldWin() throws IllegalAccessException {
         score.set(testPlayerHand, 21);
         score.set(testDealerHand, 20);
-        testPlayer.resolveHand(testDealer);
+        testDealer.resolveHand(testPlayer);
     }
 
 }

@@ -10,14 +10,8 @@ import static Objects.Enums.TextColors.BLUE;
 public class Hand extends Utils {
 
     List<Card> cards = new ArrayList<>(5);
-    protected Deck deck;
     private int currentScore;
     protected boolean isBlackjack;
-
-    public Hand(Deck deck) {
-        this.deck = deck;
-    }
-
 
     public int getScore() {
         return currentScore;
@@ -35,41 +29,10 @@ public class Hand extends Utils {
         return getCardValue(0) == getCardValue(1);
     }
 
-    protected void setIsBlackjack(){
+    private void setIsBlackjack(){
         isBlackjack = currentScore == 21;
     }
 
-    public void dealHand() {
-        cards.clear();
-        cards.add(deck.pullNextCard());
-        cards.add(deck.pullNextCard());
-        calculateScore();
-        setIsBlackjack();
-    }
-
-    protected void hit() {
-        showText("You hit.", BLUE);
-        cards.add(deck.pullNextCard());
-        calculateScore();
-    }
-
-    protected void stand() {
-        showText("You have stood at " + currentScore, BLUE);
-        pressAnyKey();
-    }
-
-    protected Hand split() {
-        showText("This feature is still being built.");
-        Hand newHand = new Hand(deck);
-        newHand.cards.add(cards.remove(1));
-        cards.add(deck.pullNextCard());
-        calculateScore();
-        setIsBlackjack();
-        newHand.cards.add(deck.pullNextCard());
-        newHand.calculateScore();
-        newHand.isBlackjack = newHand.currentScore == 21;
-        return newHand;
-    }
 
     protected int calculateScore()
     {

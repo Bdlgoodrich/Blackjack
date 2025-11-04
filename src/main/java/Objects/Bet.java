@@ -56,13 +56,13 @@ public class Bet extends Utils {
             currentBet = getIntResponse();
             if (currentBet > bankRoll)
             {
-                showText("Please enter a bet less than or equal to your Bank Roll", TextColors.GREEN);
+                showText("Please enter a bet less than or equal to your Bank Roll");
                 currentBet = 0;
                 continue;
             }
             else if (currentBet < tableMinimum)
             {
-                showText("Please enter a bet greater than the minimum.", TextColors.GREEN);
+                showText("Please enter a bet greater than the minimum.");
                 currentBet = 0;
                 continue;
             }
@@ -82,12 +82,12 @@ public class Bet extends Utils {
 
             if (insurance > currentBet/2)
             {
-                showText("Please enter a bet less than or equal to your Bank Roll", TextColors.GREEN);
+                showText("Please enter a bet less than or equal to your Bank Roll");
                 continue;
             }
             else if(currentBet <= 0)
             {
-                showText("Please enter a whole dollar bet greater than zero.", TextColors.GREEN);
+                showText("Please enter a whole dollar bet greater than zero.");
                 continue;
             }
             break;
@@ -103,7 +103,7 @@ public class Bet extends Utils {
             return true;
         }
         else {
-            showText("You do not have enough money to double down.", TextColors.GREEN);
+            showText("You do not have enough money to double down.");
             pressAnyKey();
             return false;
         }
@@ -174,6 +174,6 @@ public class Bet extends Utils {
         showText("You push.", TextColors.GREEN);
         showBankRoll();
     }
-    //    </BetResolutionMethods>
+//    </BetResolutionMethods>
 
 }

@@ -1,41 +1,38 @@
 import Objects.Dealer;
-import Objects.Deck;
 import Objects.Player;
 
 public class Play
 {
     public static void main(String[] args) {
-        Deck deck = new Deck();
-        Player player1 = new Player(deck);
-        Dealer dealer = new Dealer(deck);
-        boolean keepPlaying = true;
+        Player player1 = new Player();
+        Dealer dealer = new Dealer();
 
         player1.setBankRoll();
         player1.setMinimumBet();
 
-        while(keepPlaying) {
-            deck.shuffleIfNeeded();
+        while(true) {
+            dealer.shuffleIfNeeded();
             player1.makeBet();
-            player1.dealHand();
+            dealer.dealHand(player1);
             dealer.dealHand();
             if (player1.getIsBlackjack())
             {
-                player1.resolveHand(dealer);
-                keepPlaying = player1.offerNewHand();
+                dealer.resolvePlayerBlackjack(player1);
+                if (!dealer.offerNewHand(player1)) break;
                 continue;
             }
             dealer.showInitialHand();
             dealer.offerInsuranceIfNecessary(player1.getBet());
             if (dealer.getIsBlackjack())
             {
-                player1.resolveHand(dealer);
-                keepPlaying = player1.offerNewHand();
+                dealer.resolveDealerBlackjack(player1.getBet());
+                if (!dealer.offerNewHand(player1)) break;
                 continue;
             }
-            player1.playHand();
+            player1.playHand(dealer);
             dealer.playHand();
-            player1.resolveHand(dealer);
-            keepPlaying = player1.offerNewHand();
+            dealer.resolveHand(player1);
+            if (!dealer.offerNewHand(player1)) break;
         }
     }
 }

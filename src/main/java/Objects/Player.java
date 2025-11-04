@@ -160,6 +160,7 @@ public class Player extends Utils {
                     showText("Thank you for playing. Good bye.");
                     return false;
                 } else if (containsAffirmative(response)) {
+                    bet.resetInsurance();
                     if (bet.getCurrentBet() != 0) {
                         showText("Would you like to let your bet ride? Yes(y) or No(n).");
                         response = getStringResponse();

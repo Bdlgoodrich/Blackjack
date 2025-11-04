@@ -73,6 +73,7 @@ public class Bet extends Utils {
     protected void resetBet(){
         currentBet = 0;
     }
+    protected void resetInsurance() {insurance = 0;}
 
     public void makeInsuranceBet(){
         while(true) {

@@ -60,7 +60,7 @@ public class Dealer extends Utils {
         if (dealerHand.getCardValue(0) == Ace) {
             offerInsurance(bet);
             if (!dealerHand.isBlackjack) {
-                showText("The dealer does not have Blackjack.");
+                showText("The dealer does not have Blackjack.", RED);
                 bet.insuranceLose();
             }
         }
@@ -86,6 +86,7 @@ public class Dealer extends Utils {
     }
 
     public void resolveDealerBlackjack(Bet bet) {
+        showFullHand();
         showText("Dealer has Blackjack!", RED);
         bet.insuranceWin();
         bet.lose();

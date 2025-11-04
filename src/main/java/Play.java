@@ -8,12 +8,12 @@ public class Play
         Deck deck = new Deck();
         Player player1 = new Player(deck);
         Dealer dealer = new Dealer(deck);
-        boolean keepPlaying = true;
-
         player1.setBankRoll();
         player1.setMinimumBet();
 
-        while(keepPlaying) {
+        boolean keepPlaying;
+        
+        do {
             deck.shuffleIfNeeded();
             player1.makeBet();
             player1.dealHand();
@@ -37,6 +37,7 @@ public class Play
             player1.resolveHand(dealer);
             keepPlaying = player1.offerNewHand();
         }
+        while(keepPlaying);
     }
 }
 

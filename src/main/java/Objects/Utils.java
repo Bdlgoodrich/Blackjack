@@ -14,7 +14,6 @@ public class Utils {
     public static void pressAnyKey() {
         System.out.print("Press enter to continue.\r");
         scanner.nextLine();
-        scanner.close();
     }
 
     public void showText(String text, TextColors color) {

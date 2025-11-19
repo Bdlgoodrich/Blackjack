@@ -2,7 +2,7 @@ import Objects.Dealer;
 import Objects.Deck;
 import Objects.Player;
 
-public class Play
+public class PlaySinglePlayer
 {
     public static void main(String[] args) {
         Deck deck = new Deck();
@@ -33,6 +33,12 @@ public class Play
                 continue;
             }
             player1.playHand();
+            if (dealer.getScore() == -1)
+            {
+                player1.resolveHand(dealer);
+                keepPlaying = player1.offerNewHand();
+                continue;
+            }
             dealer.playHand();
             player1.resolveHand(dealer);
             keepPlaying = player1.offerNewHand();

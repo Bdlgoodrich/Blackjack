@@ -31,7 +31,8 @@ public class Player extends Utils {
     public int getScore() {
         return hand.getScore();
     }
-    public Hand getHand(){
+
+    public Hand getHand() {
         return hand;
     }
 
@@ -97,7 +98,7 @@ public class Player extends Utils {
                 hand.hit();
                 hand.showHand();
                 hand.showScore();
-                if (getScore() == 0) break;
+                if (getScore() == -1) break;
             } else if (response.contains("stand") || response.equals("s")) {
                 hand.stand();
                 break;
@@ -161,14 +162,22 @@ public class Player extends Utils {
                     return false;
                 } else if (containsAffirmative(response)) {
                     bet.resetInsurance();
-                    if (bet.getCurrentBet() != 0) {
+                    if (bet.getMoneyOnTable() != 0) {
                         showText("Would you like to let your bet ride? Yes(y) or No(n).");
                         response = getStringResponse();
+                        if (containsAffirmative(response)) {
+                            bet.letRide();
+                        }
+                        else bet.resetMoneyOnTable();
                     }
-                    if (!containsAffirmative(response)) {
-                        bet.resetBet();
+                    if (bet.getMoneyOnTable() == 0)
+                    {
+                        showText("Would you like to repeat your last bet? Yes(y) or No(n).");
+                        response = getStringResponse();
+                        if (!containsAffirmative(response)) {
+                            bet.resetBet();
+                        }
                     }
-                    return true;
                 } else showText("Please respond with yes(y) or no(n).");
             }
         } else if (bet.getBankRoll() > 0) {

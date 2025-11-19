@@ -116,7 +116,7 @@ public class Hand extends Utils {
             }
         }
         if (hasAce && score <= 11) score += 10;
-        if (score > 21) score = 0;
+        if (score > 21) score = -1;
         currentScore = score;
         setIsBlackjack();
         return score;

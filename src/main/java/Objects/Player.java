@@ -3,6 +3,7 @@ package Objects;
 import Objects.Enums.TextColors;
 
 public class Player extends Utils {
+    String name;
     Deck deck;
     Bet bet;
     Hand hand;
@@ -16,12 +17,15 @@ public class Player extends Utils {
         this.hand = new Hand(this.deck);
     }
 
-    public void setBankRoll() {
-        bet.setBankRoll();
+    public Player(Deck deck, Bet bet){
+        this.deck = deck;
+        this.bet = bet;
+        this.hand = new Hand(this.deck);
     }
 
-    public void setMinimumBet() {
-        bet.setTableMinimum();
+    public void setPlayerName(){
+        System.out.println("What is your name?");
+        name = getStringResponse();
     }
 
     public Bet getBet() {
@@ -68,7 +72,7 @@ public class Player extends Utils {
     }
 
     public void playHand(Hand currentHand) {
-        currentHand.showHand();
+        currentHand.showHand(name);
         currentHand.showScore();
         getPlay(currentHand, bet);
     }

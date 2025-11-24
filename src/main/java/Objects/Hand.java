@@ -129,6 +129,13 @@ public class Hand extends Utils {
         }
         showText("");
     }
+    public void showHand(String name) {
+        showTextInLine(name+"'s hand is ", BLUE);
+        for (Card card : cards) {
+            showTextInLine(card.formattedCardName() + ", ", BLUE);
+        }
+        showText("");
+    }
 
     public void showScore() {
         if (currentScore < 21 && currentScore > 0) {
@@ -137,6 +144,16 @@ public class Hand extends Utils {
             showText("You scored 21!", BLUE);
         } else {
             showText("You have busted.", BLUE);
+        }
+    }
+
+    public void showScore(String name) {
+        if (currentScore < 21 && currentScore > 0) {
+            showText(name+"'s hand scores " + currentScore, BLUE);
+        } else if (currentScore == 21) {
+            showText(name+" scored 21!", BLUE);
+        } else {
+            showText(name+" has busted.", BLUE);
         }
     }
 }

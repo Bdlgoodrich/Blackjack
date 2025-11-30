@@ -71,13 +71,13 @@ public class Dealer extends Utils {
             showText("The Dealer shows an Ace, but you do not have enough money for insurance.", GREEN);
         } else {
             while (true) {
-                showText("The Dealer shows an Ace. Do you wish to make an insurance bet against Blackjack? Yes(y) or No(n).", GREEN);
+                showText("The Dealer shows an Ace. Do you wish to make an insurance bet against Blackjack?\n1. Yes(y)\n2. No(n).", GREEN);
                 String response = getStringResponse();
-                if (response.contains("yes") || response.equals("y")) {
+                if (response.contains("yes") || response.equals("y") || response.contains("1")) {
                     bet.makeInsuranceBet();
                     bet.showInsurance();
                     break;
-                } else if (response.contains("no") || response.equals("n")) {
+                } else if (response.contains("no") || response.equals("n") || response.contains("2")) {
                     showText("You have chosen to not purchase insurance.", GREEN);
                     break;
                 } else showText("Please respond with yes or no.");

@@ -37,10 +37,11 @@ public class Utils {
         return scanner.nextLine().toLowerCase();
     }
 
-    public static int getIntResponse() {
+    public static int getDollarResponse() {
         int value;
         String response;
         while (true) {
+
             try {
                 response = scanner.nextLine();
                 response = response.replace("$", "");
@@ -61,11 +62,11 @@ public class Utils {
     }
 
     public static boolean containsAffirmative(String response){
-        return response.contains("yes") || response.equals("y");
+        return response.contains("yes") || response.equals("y") || response.contains("1");
     }
 
     public static boolean containsNegative(String response){
-        return response.contains("no") || response.equals("n");
+        return response.contains("no") || response.equals("n") || response.contains("2");
     }
 
 }

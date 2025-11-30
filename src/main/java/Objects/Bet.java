@@ -65,11 +65,11 @@ public class Bet extends Utils {
             showTextInLine("You have $" + bankRoll + ". How much would you like to bet?\n(Table minimum is $" + tableMinimum + ". Increments of $1 only.)\n$", TextColors.GREEN);
             currentBet = getIntResponse();
             if (currentBet > bankRoll) {
-                showText("Please enter a bet less than or equal to your Bank Roll", TextColors.GREEN);
+                showText("Please enter a bet less than or equal to your Bank Roll.");
                 currentBet = 0;
                 continue;
             } else if (currentBet < tableMinimum) {
-                showText("Please enter a bet greater than the minimum.", TextColors.GREEN);
+                showText("Please enter a bet greater than the minimum.");
                 currentBet = 0;
                 continue;
             }
@@ -96,16 +96,18 @@ public class Bet extends Utils {
 
     public void makeInsuranceBet() {
         while (true) {
-            int maxBet = Math.min(bankRoll, currentBet / 2);
+            int maxBet = Math.min( (bankRoll-currentBet), currentBet / 2);
             showTextInLine("You can bet up to $" + maxBet + ". How much would you like to bet for Black Jack insurance?\n$", TextColors.GREEN);
             insurance = getIntResponse();
 
             if (insurance > currentBet / 2) {
-                showText("Please enter a bet less than or equal to your Bank Roll", TextColors.GREEN);
+                showText("Please enter a bet less than or equal to your Bank Roll.");
                 continue;
-            } else if (currentBet <= 0) {
-                showText("Please enter a whole dollar bet greater than zero.", TextColors.GREEN);
+            } else if (insurance < 0) {
+                showText("Please enter a whole dollar bet.");
                 continue;
+            } else if (insurance == 0) {
+                showText("You have chosen not to purchase insurance.", TextColors.GREEN);
             }
             break;
         }

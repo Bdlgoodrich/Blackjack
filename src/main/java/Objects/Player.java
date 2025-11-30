@@ -36,6 +36,11 @@ public class Player extends Utils {
         return hand;
     }
 
+    public boolean getIsSplit() { return isSplit; }
+    public int getSplitScore() {
+        return splitHand.getScore();
+    }
+
     public void makeBet() {
         if (bet.getCurrentBet() == 0) bet.makeBet();
         bet.showBet();
@@ -78,12 +83,15 @@ public class Player extends Utils {
         while (true) {
             showOptions(hand, bet);
             String response = getStringResponse();
+
+            //switch statement rejected due to inability to chain .contain() options
+            //if statements allow for better user experience
+
             if (response.contains("double") || response.contains("down") || response.equals("d")) {
                 if (hand.getCardCount() == 2 && !isSplit) {
                     if (bet.doubleDown()) {
                         hand.hit();
                         hand.showHand();
-                        hand.showScore();
                         hand.stand();
                         break;
                     }
@@ -122,24 +130,40 @@ public class Player extends Utils {
     }
 
     public void resolveHand(Dealer dealer) {
+        if (isSplit) resolveSplitHand(dealer);
         if (getIsBlackjack()) resolvePlayerBlackjack(dealer);
         else if (dealer.getIsBlackjack()) dealer.resolveDealerBlackjack(bet);
         else {
-            int playerScore = getScore();
             int dealerScore = dealer.getScore();
-            if (dealerScore > playerScore) {
-                bet.lose();
-            } else if (dealerScore < playerScore) {
-                bet.win();
-            } else bet.push();
-        }
-
-        if (isSplit) {
-            if (getSplitIsBlackjack()) resolvePlayerBlackjack(dealer);
-
+            int playerScore = getScore();
+            calculateWinner(dealerScore,playerScore);
         }
     }
 
+    public void resolveSplitHand(Dealer dealer) {
+        showText("This is the result of your first hand:");
+        int dealerScore = dealer.getScore();
+        if (getIsBlackjack()) resolvePlayerBlackjack(dealer);
+        else {
+            int playerScore = getScore();
+            calculateWinner(dealerScore,playerScore);
+        }
+
+        showText("This is the result of your first hand:");
+        if (getSplitIsBlackjack()) resolvePlayerBlackjack(dealer);
+        else {
+            int playerScore = getSplitScore();
+            calculateWinner(dealerScore,playerScore);
+        }
+    }
+
+    public void calculateWinner(int dealerScore, int playerScore){
+        if (dealerScore > playerScore) {
+            bet.lose();
+        } else if (dealerScore < playerScore) {
+            bet.win();
+        } else bet.push();
+    }
     public void resolvePlayerBlackjack(Dealer dealer) {
         showText("You have Blackjack!", TextColors.BLUE);
         if (dealer.dealerHand.isBlackjack) {
@@ -157,30 +181,44 @@ public class Player extends Utils {
             while (true) {
                 showText("Would you like to play again? Yes(y) or No(n).");
                 String response = getStringResponse();
+
+                //if not playing again
                 if (containsNegative(response)) {
                     showText("Thank you for playing. Good bye.");
                     return false;
+
+                //if playing again
                 } else if (containsAffirmative(response)) {
                     bet.resetInsurance();
+                    //if there is money on the table, offer to let ride
                     if (bet.getMoneyOnTable() != 0) {
-                        showText("Would you like to let your bet ride? Yes(y) or No(n).");
+                        showText("Would you like to let your bet ride ($"+bet.getMoneyOnTable()+")? Yes(y) or No(n).");
                         response = getStringResponse();
+
+                        //if yes, let ride else, reset money on table (return it to the bankroll)
                         if (containsAffirmative(response)) {
                             bet.letRide();
-                        }
-                        else bet.resetMoneyOnTable();
+                        } else bet.resetMoneyOnTable();
                     }
-                    if (bet.getMoneyOnTable() == 0)
-                    {
-                        showText("Would you like to repeat your last bet? Yes(y) or No(n).");
-                        response = getStringResponse();
-                        if (!containsAffirmative(response)) {
-                            bet.resetBet();
+                    //if there is no money on the table (from a loss OR resetting the bet)
+                    if (bet.getMoneyOnTable() == 0) {
+                        //offer re-bet if bankroll is big enough
+                        if (bet.getCurrentBet()<=bet.getBankRoll()) {
+                            showText("Would you like to repeat your last bet ($" + bet.getCurrentBet() + ")? Yes(y) or No(n).");
+                            response = getStringResponse();
+                            //reset bet if not a yes
+                            if (!containsAffirmative(response)) {
+                                bet.resetBet();
+                            }
                         }
+                        //reset bet if bankroll is too small
+                        else bet.resetBet();
                     }
+                    return true;
                 } else showText("Please respond with yes(y) or no(n).");
             }
         } else if (bet.getBankRoll() > 0) {
+            bet.resetBet();
             showText("You do not have enough money to continue at this table. Would you like to move to a different one? Yes(y) or No(n).");
             String response = getStringResponse();
             if (containsNegative(response)) {

@@ -5,6 +5,7 @@ import Objects.Enums.TextColors;
 import java.util.Scanner;
 
 import static Objects.Enums.TextColors.RESET;
+import static Objects.Enums.TextColors.GREEN;
 
 public class Utils {
 
@@ -47,11 +48,13 @@ public class Utils {
                 value = Integer.parseInt(response);
                 if (value <= 0) {
                     showText("Please enter an amount greater than zero.");
+                    showTextInLine("$", GREEN);
                     continue;
                 }
                 break;
             } catch (NumberFormatException e) {
                 showText("Please enter a whole dollar value.");
+                showTextInLine("$", GREEN);
             }
         }
         return value;

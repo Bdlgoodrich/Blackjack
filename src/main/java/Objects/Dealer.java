@@ -43,7 +43,7 @@ public class Dealer extends Utils {
             int dealerScore = getScore();
             showFullHand();
             showScore();
-            if (getScore() == 0) break;
+            if (getScore() == -1) break;
             else if (dealerScore <= 16) hit();
             else {
                 dealerHand.stand();

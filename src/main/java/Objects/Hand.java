@@ -54,7 +54,8 @@ public class Hand extends Utils {
     }
 
     protected void stand() {
-        showText("You have stood at " + currentScore, BLUE);
+        if (currentScore == -1) showText("You have busted.", BLUE);
+        else showText("You have stood at " + currentScore, BLUE);
         pressAnyKey();
     }
 

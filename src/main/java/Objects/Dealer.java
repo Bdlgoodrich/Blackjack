@@ -70,17 +70,17 @@ public class Dealer extends Utils {
         if (bet.getBankRoll() == bet.getCurrentBet()) {
             showText("The Dealer shows an Ace, but you do not have enough money for insurance.", GREEN);
         } else {
+            showText("The Dealer shows an Ace. Do you wish to make an insurance bet against Blackjack? \n(1) Yes\n(2) No.", GREEN);
             while (true) {
-                showText("The Dealer shows an Ace. Do you wish to make an insurance bet against Blackjack? Yes(y) or No(n).", GREEN);
-                String response = getStringResponse();
-                if (response.contains("yes") || response.equals("y")) {
+                int response = getNumericalResponse();
+                if (response ==1) {
                     bet.makeInsuranceBet();
                     bet.showInsurance();
                     break;
-                } else if (response.contains("no") || response.equals("n")) {
+                } else if (response==2) {
                     showText("You have chosen to not purchase insurance.", GREEN);
                     break;
-                } else showText("Please respond with yes or no.");
+                } else showText("Please respond with 1 to purchase Blackjack insurance or 2 to risk it.");
             }
         }
     }

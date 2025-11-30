@@ -33,11 +33,7 @@ public class Utils {
         System.out.print(text);
     }
 
-    public static String getStringResponse() {
-        return scanner.nextLine().toLowerCase();
-    }
-
-    public static int getIntResponse() {
+    public static int getDollarResponse() {
         int value;
         String response;
         while (true) {
@@ -60,12 +56,23 @@ public class Utils {
         return value;
     }
 
-    public static boolean containsAffirmative(String response){
-        return response.contains("yes") || response.equals("y");
-    }
-
-    public static boolean containsNegative(String response){
-        return response.contains("no") || response.equals("n");
+    public static int getNumericalResponse() {
+        int value;
+        String response;
+        while (true) {
+            try {
+                response = scanner.nextLine();
+                value = Integer.parseInt(response);
+                if (value <= 0) {
+                    showText("Please enter one of the available options.");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                showText("Please enter one of the available options.");
+            }
+        }
+        return value;
     }
 
 }

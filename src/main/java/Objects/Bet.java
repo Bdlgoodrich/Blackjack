@@ -36,7 +36,7 @@ public class Bet extends Utils {
     protected void setBankRoll() {
         while (true) {
             showTextInLine("How much money would you like to start with? Up to $1000, increments of $1.\n$", TextColors.GREEN);
-            startingBankRoll = getIntResponse();
+            startingBankRoll = getDollarResponse();
             if (startingBankRoll > 1000) {
                 showText("Please enter an amount no greater than $1000.");
                 continue;
@@ -51,7 +51,7 @@ public class Bet extends Utils {
         int maximumBet = Math.min(bankRoll, 100);
         while (true) {
             showTextInLine("What table minimum would you like? Up to $" + maximumBet + ", increments of $1.\n$", TextColors.GREEN);
-            tableMinimum = getIntResponse();
+            tableMinimum = getDollarResponse();
             if (tableMinimum > startingBankRoll) {
                 showText("Please enter an amount less than $" + startingBankRoll + ".");
                 continue;
@@ -63,13 +63,13 @@ public class Bet extends Utils {
     public void makeBet() {
         while (true) {
             showTextInLine("You have $" + bankRoll + ". How much would you like to bet?\n(Table minimum is $" + tableMinimum + ". Increments of $1 only.)\n$", TextColors.GREEN);
-            currentBet = getIntResponse();
+            currentBet = getDollarResponse();
             if (currentBet > bankRoll) {
                 showText("Please enter a bet less than or equal to your Bank Roll.");
                 currentBet = 0;
                 continue;
             } else if (currentBet < tableMinimum) {
-                showText("Please enter a bet greater than the minimum.");
+                showText("Please enter a bet greater than or equal to the minimum.");
                 currentBet = 0;
                 continue;
             }
@@ -98,10 +98,10 @@ public class Bet extends Utils {
         while (true) {
             int maxBet = Math.min( (bankRoll-currentBet), currentBet / 2);
             showTextInLine("You can bet up to $" + maxBet + ". How much would you like to bet for Black Jack insurance?\n$", TextColors.GREEN);
-            insurance = getIntResponse();
+            insurance = getDollarResponse();
 
             if (insurance > currentBet / 2) {
-                showText("Please enter a bet less than or equal to your Bank Roll.");
+                showText("Please enter a bet less than or equal to the max bet.");
                 continue;
             } else if (insurance < 0) {
                 showText("Please enter a whole dollar bet.");
